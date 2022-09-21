@@ -26,7 +26,6 @@ export function stringsToIntegers(numbers: string[]): number[] {
         return Number.isInteger(whole_number) ? whole_number : 0;
     };
     return numbers.map(make_whole_number);
-    //return [];
 }
 
 /**
@@ -37,7 +36,14 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    return [];
+    const dollarRemover = (amount: string): number => {
+        if (amount.charAt(0) === "$") {
+            amount = amount.replace("$", "");
+        }
+        const value: number = parseInt(amount);
+        return Number.isInteger(value) ? value : 0;
+    };
+    return amounts.map(dollarRemover);
 };
 
 /**
