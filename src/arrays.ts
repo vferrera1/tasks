@@ -21,7 +21,12 @@ export function tripleNumbers(numbers: number[]): number[] {
  * the number cannot be parsed as an integer, convert it to 0 instead.
  */
 export function stringsToIntegers(numbers: string[]): number[] {
-    return [];
+    const make_whole_number = (str_numeral: string): number => {
+        const whole_number: number = parseInt(str_numeral);
+        return Number.isInteger(whole_number) ? whole_number : 0;
+    };
+    return numbers.map(make_whole_number);
+    //return [];
 }
 
 /**
