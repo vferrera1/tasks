@@ -86,7 +86,6 @@ export function allRGB(colors: string[]): boolean {
                 color === "red" || color === "blue" || color === "green"
         );
     }
-    //return false;
 }
 
 /**
@@ -97,7 +96,21 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    return "";
+    if (addends.length === 0) {
+        return "0=0";
+    }
+    const sum: number = addends.reduce(
+        (sum: number, numeral: number) => sum + numeral,
+        0
+    );
+    let expression: string = addends.reduce(
+        (expression: string, numeral: number) =>
+            expression + numeral.toString() + "+",
+        ""
+    );
+    expression = expression.slice(0, -1);
+    return sum.toString() + "=" + expression;
+    //return "";
 }
 
 /**
