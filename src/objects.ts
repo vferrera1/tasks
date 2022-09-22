@@ -1,3 +1,4 @@
+import { join } from "path";
 import { Question, QuestionType } from "./interfaces/question";
 
 /**
@@ -66,7 +67,9 @@ export function isValid(question: Question, answer: string): boolean {
  * name "My First Question" would become "9: My First Q".
  */
 export function toShortForm(question: Question): string {
-    return "";
+    const identification: string = question.id.toString();
+    const shortName: string = question.name.toString().substring(0, 10);
+    return identification + ": " + shortName;
 }
 
 /**
