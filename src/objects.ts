@@ -1,4 +1,5 @@
 import { join } from "path";
+import { isQuestion } from "./functions";
 import { Question, QuestionType } from "./interfaces/question";
 
 /**
@@ -129,7 +130,13 @@ export function publishQuestion(question: Question): Question {
  * The `published` field should be reset to false.
  */
 export function duplicateQuestion(id: number, oldQuestion: Question): Question {
-    return oldQuestion;
+    const oldQuestionCopy = {
+        ...oldQuestion,
+        id: id,
+        name: "Copy of " + oldQuestion.name,
+        published: false
+    };
+    return oldQuestionCopy;
 }
 
 /**
