@@ -1,5 +1,5 @@
-import { join } from "path";
-import { isQuestion } from "./functions";
+//import { join } from "path";
+//import { isQuestion } from "./functions";
 import { Question, QuestionType } from "./interfaces/question";
 
 /**
