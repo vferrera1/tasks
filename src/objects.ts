@@ -43,6 +43,19 @@ export function isCorrect(question: Question, answer: string): boolean {
  * be exactly one of the options.
  */
 export function isValid(question: Question, answer: string): boolean {
+    if (question.type === "short_answer_question") {
+        return true;
+    } else if (question.type === "multiple_choice_question") {
+        /*question.options is an array of strings that stores the possible responses to a
+         * multiple choice question. We should check whether the answer matches any of the
+         * strings in question.options.
+         * The "some" array method checks to see if a condition holds for at least one element.
+         * Use it to determine whether the answer given matches one of the MC options.
+         */
+        return question.options.some(
+            (option: string): boolean => answer === option
+        );
+    }
     return false;
 }
 
