@@ -216,7 +216,23 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType
 ): Question[] {
-    return [];
+    const targetQuestion = questions.find(
+        (question: Question): boolean => question.id === targetId
+    );
+    if (targetQuestion === undefined) {
+        return questions;
+    } else {
+        const targetQuestionIndex = questions.findIndex(
+            (question: Question): boolean => question.id === targetId
+        );
+        const changedType = { ...targetQuestion, type: newQuestionType };
+        if (changedType.type !== "multiple_choice_question") {
+            changedType.options = [];
+        }
+        const edittedList = [...questions];
+        edittedList.splice(targetQuestionIndex, 1, changedType);
+        return edittedList;
+    }
 }
 
 /**
