@@ -222,13 +222,13 @@ export function changeQuestionTypeById(
     if (targetQuestion === undefined) {
         return questions;
     } else {
-        const targetQuestionIndex = questions.findIndex(
-            (question: Question): boolean => question.id === targetId
-        );
         const changedType = { ...targetQuestion, type: newQuestionType };
         if (changedType.type !== "multiple_choice_question") {
             changedType.options = [];
         }
+        const targetQuestionIndex = questions.findIndex(
+            (question: Question): boolean => question.id === targetId
+        );
         const edittedList = [...questions];
         edittedList.splice(targetQuestionIndex, 1, changedType);
         return edittedList;
@@ -251,6 +251,14 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string
 ): Question[] {
+    const targetQuestion = questions.find(
+        (question: Question): boolean => question.id === targetId
+    );
+    if (targetQuestion === undefined) {
+        return questions;
+    } else {
+        
+    }
     return [];
 }
 
