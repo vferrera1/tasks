@@ -1,3 +1,4 @@
+import { urlToHttpOptions } from "url";
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
 import { makeBlankQuestion } from "./objects"
@@ -131,7 +132,7 @@ export function makeAnswers(questions: Question[]): Answer[] {
         })
     );
     //Question: Do I have to make a separate function above to create an Answer?
-    /*Answer: Nope! You HAVE to remember to put () around the {} 
+    /*Answer: Nope! You HAVE to remember to put () around the {}
      *when you're referencing an object inside a function definition!
      */
 }
@@ -231,23 +232,20 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType
 ): Question[] {
-    const targetQuestion = questions.find(
-        (question: Question): boolean => question.id === targetId
-    );
-    if (targetQuestion === undefined) {
-        return questions;
-    } else {
-        const changedType = { ...targetQuestion, type: newQuestionType };
-        if (changedType.type !== "multiple_choice_question") {
-            changedType.options = [];
-        }
-        const targetQuestionIndex = questions.findIndex(
-            (question: Question): boolean => question.id === targetId
-        );
-        const edittedList = [...questions];
-        edittedList.splice(targetQuestionIndex, 1, changedType);
-        return edittedList;
+    //Passes condition? Do two things:
+    // 1) Change the question's type
+    // 2) Set "options" to an empty list if type is no longer multiple choice
+    function changeQuestionType(question: Question): Question {
+        const alteredQuestion = { ...question, type: newQuestionType };
+        return alteredQuestion.type !== "multiple_choice_question"
+            ? { ...alteredQuestion, options: [] }
+            : alteredQuestion;
     }
+    return questions.map(
+        (question: Question): Question =>
+            question.id === targetId ? changeQuestionType(question) : question
+    );
+    return [];
 }
 
 /**
@@ -266,27 +264,32 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string
 ): Question[] {
-    /*const targetQuestion = questions.find(
-        (question: Question): boolean => question.id === targetId
-    );
-    if (targetQuestion === undefined) {
-        return questions;
-    } else {
-        const targetQuestionCopy = { ...targetQuestion, options: [...targetQuestion.options] };
-        let updatedOptions = targetQuestionCopy.options;
+    //Passes condition? Do these things:
+    // 1). Evaluate targetOptionIndex
+    // 2). Place newOption into options array depending on targetOptionIndex
+    function addNewOption(question: Question): Question {
         if (targetOptionIndex === -1) {
-            updatedOptions = [...targetQuestionCopy.options, newOption];
+            //newOption should be added to end of option list in question
+            const expandedQuestion = {
+                ...question,
+                options: [...question.options, newOption]
+            };
+            return expandedQuestion;
         } else {
-            updatedOptions = [...targetQuestionCopy.options];
-            updatedOptions.splice(targetOptionIndex, 1, newOption);
+            //newOption should replace existing element at targetOptionIndex
+            const expandedQuestion = {
+                ...question,
+                options: [...question.options]
+            };
+            expandedQuestion.options.splice(targetOptionIndex, 1, newOption);
+            return expandedQuestion;
         }
-        targetQuestionCopy.options = updatedOptions;
+        return question;
     }
-    const targetQuestionIndex = questions.findIndex(
-            (question: Question): boolean => question.id === targetId
-        );
-    }
-    */
+    return questions.map(
+        (question: Question): Question =>
+            question.id === targetId ? addNewOption(question) : question
+    );
     return [];
 }
 
