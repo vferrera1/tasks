@@ -151,7 +151,15 @@ export function publishAll(questions: Question[]): Question[] {
  * are the same type. They can be any type, as long as they are all the SAME type.
  */
 export function sameType(questions: Question[]): boolean {
-    const allMult: boolean = questions.every(
+    if (questions.length === 0) {
+        return true;
+    } else {
+        const firstQuestionType = questions[0].type;
+        return questions.every(
+            (question: Question): boolean => question.type === firstQuestionType
+        );
+    }
+    /*const allMult: boolean = questions.every(
         (question: Question): boolean =>
             question.type === "multiple_choice_question"
     );
@@ -160,6 +168,7 @@ export function sameType(questions: Question[]): boolean {
             question.type === "short_answer_question"
     );
     return allMult || allShort;
+    */
     //Is there a way to consolidate this function? What if there were many different question types?
 }
 
@@ -174,8 +183,7 @@ export function addNewQuestion(
     name: string,
     type: QuestionType
 ): Question[] {
-    const blankQuestion = makeBlankQuestion(id, name, type);
-    return [...questions, blankQuestion];
+    return [...questions, makeBlankQuestion(id, name, type)];
 }
 
 /***
@@ -188,7 +196,7 @@ export function renameQuestionById(
     targetId: number,
     newName: string
 ): Question[] {
-    const targetQuestion = questions.find(
+    /*const targetQuestion = questions.find(
         (question: Question): boolean => question.id === targetId
     );
     if (targetQuestion === undefined) {
@@ -202,6 +210,13 @@ export function renameQuestionById(
         edittedList.splice(targetQuestionIndex, 1, renammedQuestion);
         return edittedList;
     }
+    */
+    //Step 1: Check id of questions (find question that matches id to target id)
+    //Step 2: Change name of question that was matched
+    return questions.map(
+        (question: Question): Question =>
+            question.id === targetId ? { ...question, name: newName } : question
+    );
 }
 
 /***
@@ -251,14 +266,27 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string
 ): Question[] {
-    const targetQuestion = questions.find(
+    /*const targetQuestion = questions.find(
         (question: Question): boolean => question.id === targetId
     );
     if (targetQuestion === undefined) {
         return questions;
     } else {
-        
+        const targetQuestionCopy = { ...targetQuestion, options: [...targetQuestion.options] };
+        let updatedOptions = targetQuestionCopy.options;
+        if (targetOptionIndex === -1) {
+            updatedOptions = [...targetQuestionCopy.options, newOption];
+        } else {
+            updatedOptions = [...targetQuestionCopy.options];
+            updatedOptions.splice(targetOptionIndex, 1, newOption);
+        }
+        targetQuestionCopy.options = updatedOptions;
     }
+    const targetQuestionIndex = questions.findIndex(
+            (question: Question): boolean => question.id === targetId
+        );
+    }
+    */
     return [];
 }
 
