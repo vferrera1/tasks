@@ -188,7 +188,20 @@ export function renameQuestionById(
     targetId: number,
     newName: string
 ): Question[] {
-    return [];
+    const targetQuestion = questions.find(
+        (question: Question): boolean => question.id === targetId
+    );
+    if (targetQuestion === undefined) {
+        return questions;
+    } else {
+        const targetQuestionIndex = questions.findIndex(
+            (question: Question): boolean => question.id === targetId
+        );
+        const renammedQuestion = { ...targetQuestion, name: newName };
+        const edittedList = [...questions];
+        edittedList.splice(targetQuestionIndex, 1, renammedQuestion);
+        return edittedList;
+    }
 }
 
 /***
