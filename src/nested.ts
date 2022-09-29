@@ -121,7 +121,16 @@ export function toCSV(questions: Question[]): string {
  * making the `text` an empty string, and using false for both `submitted` and `correct`.
  */
 export function makeAnswers(questions: Question[]): Answer[] {
-    return [];
+    const answerMaker = (question: Question): Answer => {
+        return {
+            questionId: question.id,
+            text: "",
+            submitted: false,
+            correct: false
+        };
+    };
+    return questions.map(answerMaker);
+    //Question: Do I have to make a separate function above to create an Answer?
 }
 
 /***
