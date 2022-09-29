@@ -98,7 +98,21 @@ id,name,options,points,published
  * Check the unit tests for more examples!
  */
 export function toCSV(questions: Question[]): string {
-    return "";
+    const csvHeader = "id,name,options,points,published\n";
+    //Newline character should be removed if using reduce function. Keep it for the map function.
+    /*const csvBody: string = questions.reduce(
+        (currentCSV: string, question: Question): string =>
+            `${currentCSV}\n${question.id},${question.name},${question.options.length},${question.points},${question.published}`,
+        ""
+    );
+    */
+    const csvBody: string = questions
+        .map(
+            (question: Question): string =>
+                `${question.id},${question.name},${question.options.length},${question.points},${question.published}`
+        )
+        .join("\n");
+    return csvHeader + csvBody;
 }
 
 /**
