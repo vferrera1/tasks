@@ -1,5 +1,6 @@
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
+import { makeBlankQuestion } from "./objects"
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -159,6 +160,7 @@ export function sameType(questions: Question[]): boolean {
             question.type === "short_answer_question"
     );
     return allMult || allShort;
+    //Is there a way to consolidate this function? What if there were many different question types?
 }
 
 /***
@@ -172,7 +174,8 @@ export function addNewQuestion(
     name: string,
     type: QuestionType
 ): Question[] {
-    return [];
+    const blankQuestion = makeBlankQuestion(id, name, type);
+    return [...questions, blankQuestion];
 }
 
 /***
