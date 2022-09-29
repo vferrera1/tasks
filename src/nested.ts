@@ -1,7 +1,6 @@
-import { urlToHttpOptions } from "url";
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-import { duplicateQuestion, makeBlankQuestion } from "./objects"
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -35,7 +34,9 @@ export function findQuestion(
     questions: Question[],
     id: number
 ): Question | null {
-    const identifiedQuestion = questions.find((question: Question): boolean => question.id === id);
+    const identifiedQuestion = questions.find(
+        (question: Question): boolean => question.id === id
+    );
     return identifiedQuestion ? identifiedQuestion : null;
 }
 
@@ -318,7 +319,7 @@ export function duplicateQuestionInArray(
         (question: Question): boolean => question.id === targetId
     );
     clonedQuestions.splice(
-        targetQuestionIndex+1,
+        targetQuestionIndex + 1,
         0,
         duplicateQuestion(newId, clonedQuestions[targetQuestionIndex])
     );
