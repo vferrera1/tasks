@@ -51,11 +51,13 @@ export function TwoDice(): JSX.Element {
             </div>
             <div>
                 {leftDieValue === rightDieValue ? (
-                    leftDieValue === 1 ? (
-                        <span>Lose</span>
-                    ) : (
-                        <span>Win</span>
-                    )
+                    <>
+                        {leftDieValue === 1 ? (
+                            <span>Lose</span>
+                        ) : (
+                            <span>Win</span>
+                        )}
+                    </>
                 ) : (
                     <span></span>
                 )}
